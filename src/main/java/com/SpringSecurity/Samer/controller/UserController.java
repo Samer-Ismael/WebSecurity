@@ -1,5 +1,6 @@
 package com.SpringSecurity.Samer.controller;
 
+import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -7,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
+
+import javax.swing.text.html.HTML;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +26,14 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
     }
 
+
+
     @GetMapping("")
-    public String home() {
-        return ("<div style='text-align: center;'><h2 style='font-size: 100px;'>Welcome</h2></div>");
+    public String index() {
+        return "Welcome to users management!";
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+
     @PostMapping("/add")
     public ResponseEntity<String> addUser (@RequestBody UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -35,14 +41,15 @@ public class UserController {
         if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
         } else {
+            user.setRole(Roles.ROLE_USER);
             userService.save(user);
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return ResponseEntity.status(HttpStatus.OK).body("Done!");
         }
     }
 
 
 
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{name}")
     public ResponseEntity<UserEntity> getUserByName(@PathVariable String name) {
         UserEntity user = userService.findByUsername(name);
@@ -53,10 +60,7 @@ public class UserController {
         }
     }
 
-
-
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<UserEntity>> getAllUsers () {
         if (userService.findAll()==null) {

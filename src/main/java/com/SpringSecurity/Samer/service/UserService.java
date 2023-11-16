@@ -3,6 +3,8 @@ package com.SpringSecurity.Samer.service;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.repo.UserRepo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -74,6 +76,14 @@ public class UserService {
 
     public Boolean existsById(Long id) {
         return userRepo.existsById(id);
+    }
+    public void saveJson(String userJson) throws JsonProcessingException {
+        // Convert the JSON string back to a UserEntity object
+        ObjectMapper objectMapper = new ObjectMapper();
+        UserEntity user = objectMapper.readValue(userJson, UserEntity.class);
+
+        // Save the UserEntity object to the database
+        userRepo.save(user);
     }
 
 }
