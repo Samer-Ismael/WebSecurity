@@ -1,22 +1,14 @@
 package com.SpringSecurity.Samer;
 
-import com.SpringSecurity.Samer.config.SecurityConfig;
-import com.SpringSecurity.Samer.controller.UserController;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 @SpringBootApplication
 public class SamerApplication {
