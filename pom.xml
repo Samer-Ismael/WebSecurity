@@ -52,6 +52,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.github.nyla-solutions</groupId>
+			<artifactId>gedi-geode-spring-security</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<build>
