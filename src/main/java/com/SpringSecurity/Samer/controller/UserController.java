@@ -46,7 +46,7 @@ public class UserController {
             UserEntity newUser = new UserEntity();
             newUser.setUsername(user.getUsername());
             newUser.setRole(Roles.ROLE_USER);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            newUser.setPassword(passwordEncoder.encode(user.getPassword()));
 
             userService.save(newUser);
             return ResponseEntity.status(HttpStatus.OK).body("Registration successful!");
