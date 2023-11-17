@@ -6,6 +6,7 @@ import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.model.UserToShowToSwagger;
 import com.SpringSecurity.Samer.service.JWTService;
 import com.SpringSecurity.Samer.service.UserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,6 +37,7 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "Register", notes = "Everybody is welcome to register")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody UserToShowToSwagger user) {
 
@@ -54,6 +57,7 @@ public class UserController {
     }
 
 
+    @ApiOperation(value = "Login", notes = "Returns a token if the user is authenticated")
     @PostMapping("/login")
     public String authAndGetToken(@RequestBody AuthRequest authRequest) {
 
@@ -67,6 +71,7 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "Get user by id", notes = "Returns user by id (for admins and users)")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{name}")
     public ResponseEntity<UserEntity> getUserByName(@PathVariable String name) {
@@ -78,6 +83,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Get all users", notes = "Returns all users in the database (for admins and users)")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
     public ResponseEntity<List<UserEntity>> getAllUsers() {
@@ -88,6 +94,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Delete user", notes = "Deletes user by id (for admins only))")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<UserEntity> deleteUser(@PathVariable Long id) {
@@ -99,6 +106,7 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "Update user", notes = "Updates user by id (for admins only))")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
@@ -109,6 +117,19 @@ public class UserController {
             return new ResponseEntity<>("Done!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
+        }
+    }
+    @ApiOperation(value = "Delete user", notes = "Deletes the user that is logged in, not other users ")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/me")
+    public ResponseEntity<String> deleteUser(Principal principal) {
+        String username = principal.getName();
+        UserEntity user = userService.findByUsername(username);
+        if (user != null) {
+            userService.deleteById(user.getId());
+            return new ResponseEntity<>("User deleted successfully", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
 }
