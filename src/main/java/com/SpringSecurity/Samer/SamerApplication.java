@@ -35,7 +35,7 @@ public class SamerApplication {
     CommandLineRunner createAdminUser() {
         return args -> {
             String adminUsername = "admin";
-            openWebLink("http://localhost:8080/");
+            openWebLink("http://localhost:8080/index.html");
             if (!userService.existsByUsername(adminUsername)) {
                 UserEntity admin = new UserEntity();
                 admin.setUsername(adminUsername);
