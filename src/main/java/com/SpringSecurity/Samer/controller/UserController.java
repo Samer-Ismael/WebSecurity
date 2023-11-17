@@ -3,7 +3,6 @@ package com.SpringSecurity.Samer.controller;
 import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
-import com.SpringSecurity.Samer.model.UserToShowToSwagger;
 import com.SpringSecurity.Samer.service.JWTService;
 import com.SpringSecurity.Samer.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -41,7 +40,7 @@ public class UserController {
 
     @ApiOperation(value = "Register", notes = "Everybody is welcome to register")
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody UserToShowToSwagger user) {
+    public ResponseEntity<String> register(@RequestBody AuthRequest user) {
 
 
         if (userService.existsByUsername(user.getUsername())) {

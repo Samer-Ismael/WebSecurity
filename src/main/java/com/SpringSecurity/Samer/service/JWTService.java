@@ -29,7 +29,6 @@ public class JWTService {
                 .signWith(getSecritkey(), SignatureAlgorithm.HS256).compact();
     }
 
-
     private Key getSecritkey() {
         /*
     You can add environment variable in your operating system
