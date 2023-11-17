@@ -36,6 +36,8 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
+    // @ApiOperation was to make the documentation look better and have comments.
+    // It didn't work and is decided to leave it here. It looks good :)
 
     @ApiOperation(value = "Register", notes = "Everybody is welcome to register")
     @PostMapping("/register")
