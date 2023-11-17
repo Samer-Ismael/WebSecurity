@@ -25,17 +25,6 @@ public class UserController {
     }
 
 
-    @GetMapping("")
-    public String index() {
-        return "<div style=\"text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);\">" +
-                "<h1 style=\"font-size: 75px;\">Welcome to the home page!</h1>" +
-                "<p style=\"font-size: 75px;\">Explore API documentation: <a href=\"/swagger-ui.html\">Click here</a></p>" +
-                "</div>" + "<h1 style=\"font-size: 50px;\">Made by Samer</h1>";
-    }
-
-
-
-
     @PostMapping("/add")
     public ResponseEntity<String> addUser(@RequestBody UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
