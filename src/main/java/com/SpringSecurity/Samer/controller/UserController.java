@@ -1,11 +1,17 @@
 package com.SpringSecurity.Samer.controller;
 
+import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
+import com.SpringSecurity.Samer.model.UserToShowToSwagger;
+import com.SpringSecurity.Samer.service.JWTService;
 import com.SpringSecurity.Samer.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,28 +22,50 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
+    private final AuthenticationManager authenticationManager;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private JWTService jwtService;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder, JWTService jwtService) {
+        this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
 
-    @PostMapping("/add")
-    public ResponseEntity<String> addUser(@RequestBody UserEntity user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody UserToShowToSwagger user) {
+
 
         if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
         } else {
-            user.setRole(Roles.ROLE_USER);
-            userService.save(user);
-            return ResponseEntity.status(HttpStatus.OK).body("Done!");
+
+            UserEntity newUser = new UserEntity();
+            newUser.setUsername(user.getUsername());
+            newUser.setRole(Roles.ROLE_USER);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+            userService.save(newUser);
+            return ResponseEntity.status(HttpStatus.OK).body("Registration successful!");
         }
     }
 
+
+    @PostMapping("/login")
+    public String authAndGetToken(@RequestBody AuthRequest authRequest) {
+
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+
+        if (authentication.isAuthenticated()) {
+            return jwtService.generateToken(authRequest.getUsername());
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password").toString();
+        }
+
+    }
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{name}")

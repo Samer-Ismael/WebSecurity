@@ -1,5 +1,6 @@
 package com.SpringSecurity.Samer.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -16,7 +17,9 @@ public class UserEntity {
     @Id
     @GeneratedValue
     private Long id;
+    @ApiModelProperty(value = "username", example = "username")
     private String username;
+    @ApiModelProperty(value = "password", example = "password")
     private String password;
     @Getter
     @Setter

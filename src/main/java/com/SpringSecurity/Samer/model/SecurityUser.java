@@ -1,12 +1,13 @@
 package com.SpringSecurity.Samer.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
 
-
+@Data
 public class SecurityUser implements UserDetails {
 
     private final UserEntity user;
@@ -23,6 +24,18 @@ public class SecurityUser implements UserDetails {
     @Override
     public String getUsername() {
         return user.getUsername();
+    }
+
+    public void setUsername(String username) {
+        user.setUsername(username);
+    }
+
+    public void setPassword(String password) {
+        user.setPassword(password);
+    }
+
+    public void setRole(Roles role) {
+        user.setRole(role);
     }
 
     @Override
