@@ -12,34 +12,33 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 public class SamerApplication {
-	private final UserService userService;
-	private final PasswordEncoder passwordEncoder;
-	public SamerApplication(UserService userService, PasswordEncoder passwordEncoder) {
-		this.userService = userService;
-		this.passwordEncoder = passwordEncoder;
-	}
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+
+    public SamerApplication(UserService userService, PasswordEncoder passwordEncoder) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 
+    public static void main(String[] args) {
+        SpringApplication.run(SamerApplication.class, args);
+    }
 
 
-	public static void main(String[] args) {
-		SpringApplication.run(SamerApplication.class, args);
-	}
-
-
-	@Bean
-	CommandLineRunner createAdminUser() {
-		return args -> {
-			String adminUsername = "admin";
-			if (!userService.existsByUsername(adminUsername)) {
-				UserEntity admin = new UserEntity();
-				admin.setUsername(adminUsername);
-				admin.setPassword(passwordEncoder.encode("admin"));
-				admin.setRole(Roles.ROLE_ADMIN);
-				ObjectMapper objectMapper = new ObjectMapper();
-				String adminJson = objectMapper.writeValueAsString(admin);
-				userService.saveJson(adminJson);
-			}
-		};
-	}
+    @Bean
+    CommandLineRunner createAdminUser() {
+        return args -> {
+            String adminUsername = "admin";
+            if (!userService.existsByUsername(adminUsername)) {
+                UserEntity admin = new UserEntity();
+                admin.setUsername(adminUsername);
+                admin.setPassword(passwordEncoder.encode("admin"));
+                admin.setRole(Roles.ROLE_ADMIN);
+                ObjectMapper objectMapper = new ObjectMapper();
+                String adminJson = objectMapper.writeValueAsString(admin);
+                userService.saveJson(adminJson);
+            }
+        };
+    }
 }

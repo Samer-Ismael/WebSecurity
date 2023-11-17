@@ -8,9 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.swing.text.html.HTML;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +25,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("")
     public String index() {
         return "Welcome to users management!";
@@ -35,7 +32,7 @@ public class UserController {
 
 
     @PostMapping("/add")
-    public ResponseEntity<String> addUser (@RequestBody UserEntity user) {
+    public ResponseEntity<String> addUser(@RequestBody UserEntity user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         if (userService.existsByUsername(user.getUsername())) {
@@ -46,7 +43,6 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.OK).body("Done!");
         }
     }
-
 
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
@@ -62,24 +58,25 @@ public class UserController {
 
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
-    public ResponseEntity<List<UserEntity>> getAllUsers () {
-        if (userService.findAll()==null) {
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+        if (userService.findAll() == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
         }
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
-    public ResponseEntity<UserEntity> deleteUser (@PathVariable Long id) {
+    public ResponseEntity<UserEntity> deleteUser(@PathVariable Long id) {
         if (userService.existsById(id)) {
             userService.deleteById(id);
             return new ResponseEntity<>(HttpStatus.OK);
-        }else {
+        } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
+
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
@@ -89,7 +86,7 @@ public class UserController {
         if (result.isPresent()) {
             return new ResponseEntity<>("Done!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Not found",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }
     }
 

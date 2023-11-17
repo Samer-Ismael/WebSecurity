@@ -1,4 +1,5 @@
 package com.SpringSecurity.Samer.service;
+
 import com.SpringSecurity.Samer.model.SecurityUser;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.repo.UserRepo;

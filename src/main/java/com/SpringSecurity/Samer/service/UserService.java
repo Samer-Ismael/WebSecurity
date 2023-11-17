@@ -24,7 +24,7 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public ResponseEntity<String> save (UserEntity user) {
+    public ResponseEntity<String> save(UserEntity user) {
         if (userRepo.existsByUsername(user.getUsername())) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Username already exists");
         } else {
@@ -37,10 +37,10 @@ public class UserService {
         }
     }
 
-   public List<UserEntity> findAll () {
+    public List<UserEntity> findAll() {
         if (userRepo.findAll().isEmpty()) {
             return null;
-        }else {
+        } else {
             userRepo.findAll();
             return new ArrayList<>(userRepo.findAll());
         }
@@ -66,7 +66,7 @@ public class UserService {
         }
     }
 
-    public void deleteById (Long id) {
+    public void deleteById(Long id) {
         userRepo.deleteById(id);
     }
 
@@ -77,6 +77,7 @@ public class UserService {
     public Boolean existsById(Long id) {
         return userRepo.existsById(id);
     }
+
     public void saveJson(String userJson) throws JsonProcessingException {
         // Convert the JSON string back to a UserEntity object
         ObjectMapper objectMapper = new ObjectMapper();

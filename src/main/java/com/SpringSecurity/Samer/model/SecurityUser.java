@@ -1,16 +1,15 @@
 package com.SpringSecurity.Samer.model;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
-import java.util.stream.Collectors;
 
 
 public class SecurityUser implements UserDetails {
 
-    private UserEntity user;
+    private final UserEntity user;
 
     public SecurityUser(UserEntity user) {
         this.user = user;
