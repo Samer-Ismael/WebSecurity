@@ -83,5 +83,4 @@ public class UserController {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }
     }
-
 }
