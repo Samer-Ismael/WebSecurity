@@ -25,7 +25,11 @@ public class JWTService {
     }
 
     private String createToken(Map<String, Object> claims, String username) {
-        return Jwts.builder().setClaims(claims).setSubject(username).setIssuedAt(new Date(System.currentTimeMillis())).setExpiration(new Date(System.currentTimeMillis() + 7 * 24 * 60 * 60 * 1000)) // 7 days
+        return Jwts.builder()
+                .setClaims(claims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() +  24 * 60 * 60 * 1000)) // 24 hours
                 .signWith(getSecritkey(), SignatureAlgorithm.HS256).compact();
     }
 
@@ -40,7 +44,8 @@ public class JWTService {
     String secretKey = System.getenv("SECRET_KEY");
      */
 
-        byte[] key = Decoders.BASE64.decode("daa5ec3d56b653ffcde8470d7ba08d918dd5d27fd447542ff8dadb590f0cacff");
+        byte[] key = Decoders.BASE64
+                .decode("daa5ec3d56b653ffcde8470d7ba08d918dd5d27fd447542ff8dadb590f0cacff");
         return Keys.hmacShaKeyFor(key);
     }
 
