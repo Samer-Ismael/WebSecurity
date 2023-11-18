@@ -67,12 +67,13 @@ public class UserController {
     @PostMapping("/login")
     public String authAndGetToken(@RequestBody AuthRequest authRequest) {
 
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
         if (authentication.isAuthenticated()) {
             return jwtService.generateToken(authRequest.getUsername());
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid username or password").toString();
+            return new ResponseEntity<>("Wrong username or password", HttpStatus.BAD_REQUEST).getBody();
         }
 
     }
