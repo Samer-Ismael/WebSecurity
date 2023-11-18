@@ -127,6 +127,8 @@ public class UserController {
         Optional<UserEntity> result = userService.updateUserById(id, updatedUser);
 
         if (result.isPresent()) {
+            if (updatedUser.getRole() == null) updatedUser.setRole(result.get().getRole());
+            if (updatedUser.getUsername() == null) updatedUser.setUsername(result.get().getUsername());
             return new ResponseEntity<>("Done!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
