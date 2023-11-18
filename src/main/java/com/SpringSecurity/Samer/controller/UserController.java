@@ -4,6 +4,7 @@ import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.JWTService;
+import com.SpringSecurity.Samer.service.PasswordValidator;
 import com.SpringSecurity.Samer.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import jakarta.persistence.EntityManager;
@@ -51,6 +52,10 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
         } else {
 
+            String badPass = PasswordValidator.validatePassword(user.getPassword());
+            if (!badPass.equals("")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(badPass);
+            }
             UserEntity newUser = new UserEntity();
             newUser.setUsername(user.getUsername());
             newUser.setRole(Roles.ROLE_USER);
