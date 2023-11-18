@@ -65,17 +65,18 @@ public class UserController {
     // It authenticates the user and if successful, generates a JWT token for the user.
     @ApiOperation(value = "Login", notes = "Returns a token if the user is authenticated")
     @PostMapping("/login")
-    public String authAndGetToken(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<String> authAndGetToken(@RequestBody AuthRequest authRequest) {
+        try {
+            Authentication authentication = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
-
-        if (authentication.isAuthenticated()) {
-            return jwtService.generateToken(authRequest.getUsername());
-        } else {
-            return new ResponseEntity<>("Wrong username or password", HttpStatus.BAD_REQUEST).getBody();
+            if (authentication.isAuthenticated()) {
+                return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername()));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
         }
-
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
     }
 
     // The getUserByName method retrieves a user by their username.
