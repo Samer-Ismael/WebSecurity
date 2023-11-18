@@ -1,4 +1,4 @@
-package com.SpringSecurity.Samer.service;
+package com.SpringSecurity.Samer.filter;
 
 public class PasswordValidator {
 

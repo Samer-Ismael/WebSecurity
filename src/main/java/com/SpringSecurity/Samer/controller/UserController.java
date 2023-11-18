@@ -4,23 +4,20 @@ import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.JWTService;
-import com.SpringSecurity.Samer.service.PasswordValidator;
+import com.SpringSecurity.Samer.filter.PasswordValidator;
 import com.SpringSecurity.Samer.service.UserService;
 import io.swagger.annotations.ApiOperation;
-import jakarta.persistence.EntityManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Optional;
 
 // UserController is a REST controller that handles user-related requests.
 // It is annotated with @RestController to indicate that it's a controller where every method returns a domain object instead of a view.
