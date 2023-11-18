@@ -105,4 +105,8 @@ public class UserService {
         userRepo.save(user);
     }
 
+    public Optional<UserEntity> findById(long id) {
+        return userRepo.findById(id);
+    }
+
 }

@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -123,12 +124,17 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<String> updateUserById(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
-        updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
-        Optional<UserEntity> result = userService.updateUserById(id, updatedUser);
+        if (updatedUser.getPassword() != null) {
+            updatedUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+        }
 
-        if (result.isPresent()) {
-            if (updatedUser.getRole() == null) updatedUser.setRole(result.get().getRole());
-            if (updatedUser.getUsername() == null) updatedUser.setUsername(result.get().getUsername());
+        if (userService.existsById(id)) {
+            UserEntity newUser = userService.findById(id).get();
+            if (updatedUser.getPassword() == null) updatedUser.setPassword(newUser.getPassword());
+            if (updatedUser.getRole() == null) updatedUser.setRole(newUser.getRole());
+            if (updatedUser.getUsername() == null) updatedUser.setUsername(newUser.getUsername());
+
+            userService.updateUserById(id, updatedUser);
             return new ResponseEntity<>("Done!", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
