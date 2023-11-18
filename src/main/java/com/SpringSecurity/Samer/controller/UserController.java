@@ -20,6 +20,9 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
+// UserController is a REST controller that handles user-related requests.
+// It is annotated with @RestController to indicate that it's a controller where every method returns a domain object instead of a view.
+// It's also annotated with @RequestMapping("/users") to map web requests onto specific handler classes and/or handler methods.
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -28,6 +31,8 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private JWTService jwtService;
+
+    // Constructor for UserController, it takes an AuthenticationManager, UserService, PasswordEncoder, and JWTService as parameters.
     public UserController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder, JWTService jwtService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
@@ -35,13 +40,11 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    // @ApiOperation was to make the documentation look better and have comments.
-    // It didn't work and is decided to leave it here. It looks good :)
-
+    // The register method handles the registration of new users.
+    // It checks if the username already exists, if not, it creates a new user with the provided details.
     @ApiOperation(value = "Register", notes = "Everybody is welcome to register")
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody AuthRequest user) {
-
 
         if (userService.existsByUsername(user.getUsername())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already exists");
@@ -57,6 +60,8 @@ public class UserController {
         }
     }
 
+    // The authAndGetToken method handles the authentication of users.
+    // It authenticates the user and if successful, generates a JWT token for the user.
     @ApiOperation(value = "Login", notes = "Returns a token if the user is authenticated")
     @PostMapping("/login")
     public String authAndGetToken(@RequestBody AuthRequest authRequest) {
@@ -71,6 +76,8 @@ public class UserController {
 
     }
 
+    // The getUserByName method retrieves a user by their username.
+    // It returns a ResponseEntity containing the UserEntity if found, or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Get user by id", notes = "Returns user by id (for admins and users)")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/{name}")
@@ -83,6 +90,8 @@ public class UserController {
         }
     }
 
+    // The getAllUsers method retrieves all users.
+    // It returns a ResponseEntity containing a list of all UserEntity objects, or a NOT_FOUND status if no users are found.
     @ApiOperation(value = "Get all users", notes = "Returns all users in the database (for admins and users)")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @GetMapping("/all")
@@ -94,6 +103,8 @@ public class UserController {
         }
     }
 
+    // The deleteUser method deletes a user by their id.
+    // It returns a ResponseEntity with an OK status if the user was successfully deleted, or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Delete user", notes = "Deletes user by id (for admins only))")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
@@ -106,6 +117,8 @@ public class UserController {
         }
     }
 
+    // The updateUserById method updates a user by their id.
+    // It returns a ResponseEntity with an OK status and a message if the user was successfully updated, or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Update user", notes = "Updates user by id (for admins only))")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
@@ -120,6 +133,8 @@ public class UserController {
         }
     }
 
+    // The deleteUser method deletes the currently logged-in user.
+    // It returns a ResponseEntity with an OK status and a message if the user was successfully deleted, or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Delete user", notes = "Deletes the user that is logged in, not other users ")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/me")

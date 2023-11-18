@@ -1,6 +1,5 @@
 package com.SpringSecurity.Samer.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
