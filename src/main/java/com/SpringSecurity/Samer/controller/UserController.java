@@ -6,6 +6,7 @@ import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.JWTService;
 import com.SpringSecurity.Samer.service.UserService;
 import io.swagger.annotations.ApiOperation;
+import jakarta.persistence.EntityManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,6 @@ public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
     private JWTService jwtService;
-
     public UserController(AuthenticationManager authenticationManager, UserService userService, PasswordEncoder passwordEncoder, JWTService jwtService) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
