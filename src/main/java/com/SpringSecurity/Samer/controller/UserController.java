@@ -57,7 +57,6 @@ public class UserController {
         }
     }
 
-
     @ApiOperation(value = "Login", notes = "Returns a token if the user is authenticated")
     @PostMapping("/login")
     public String authAndGetToken(@RequestBody AuthRequest authRequest) {
@@ -120,6 +119,7 @@ public class UserController {
             return new ResponseEntity<>("Not found", HttpStatus.NOT_FOUND);
         }
     }
+
     @ApiOperation(value = "Delete user", notes = "Deletes the user that is logged in, not other users ")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @DeleteMapping("/me")

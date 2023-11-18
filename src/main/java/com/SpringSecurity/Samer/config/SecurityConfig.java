@@ -49,22 +49,13 @@ public class SecurityConfig {
     SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.csrf(csrf -> csrf.disable());
-
         httpSecurity.authorizeHttpRequests(auth ->
                     auth.requestMatchers(AUTH_WHITELIST).permitAll().anyRequest().authenticated());
 
-        httpSecurity.sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-        httpSecurity.userDetailsService(userDetailsService);
-
         httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
+        httpSecurity.userDetailsService(userDetailsService);
         httpSecurity.authenticationProvider(authenticationProvider());
-
         httpSecurity.addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
-        //httpSecurity.httpBasic(withDefaults());
-
 
         return httpSecurity.build();
 
