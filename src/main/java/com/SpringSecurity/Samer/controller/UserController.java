@@ -1,6 +1,7 @@
 package com.SpringSecurity.Samer.controller;
 
 import com.SpringSecurity.Samer.model.AuthRequest;
+import com.SpringSecurity.Samer.model.ChangingPassword;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.JWTService;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -159,5 +161,35 @@ public class UserController {
         } else {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @ApiOperation(value = "Delete user", notes = "Change the pass for the user that is logged in, not other users ")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PutMapping("/changePass")
+    public ResponseEntity<String> changeUserPass (Principal principal, @RequestBody ChangingPassword changingPassword) {
+        UserEntity user = userService.findByUsername(principal.getName());
+        String oldPass = changingPassword.getOldPassword();
+        String newPass = changingPassword.getNewPassword();
+        String confirmPass = changingPassword.getConfirmPassword();
+
+        if (passwordEncoder.matches(oldPass, user.getPassword())) {
+            if (newPass.equals(confirmPass)) {
+                String badPass = PasswordValidator.validatePassword(newPass);
+                if (!badPass.equals("")) {
+                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(badPass);
+                }
+                user.setPassword(passwordEncoder.encode(newPass));
+                userService.save(user);
+                return ResponseEntity.status(HttpStatus.OK).body("Password changed successfully");
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password and confirm password do not match");
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Old password is incorrect");
+        }
+
+
+
+
     }
 }
