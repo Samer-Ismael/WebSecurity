@@ -15,83 +15,83 @@ Sure, here's a more detailed description of the endpoints:
 
 ### Endpoints
 
-1. <span style="color:green">Register a New User</span>
-    - *POST /users/register*
-    - **Request Body:**
-      ```json
-      { "username": "", "password": "" }
-      ```
-    - **Successful Response:**
-        - HTTP 200 OK with a message indicating successful registration.
-    - **Error Response:**
-        - HTTP 400 Bad Request with a message indicating the username already exists.
+1. **Register a New User**
+   - *POST /users/register*
+   - **Request Body:**
+     ```json
+     { "username": "", "password": "" }
+     ```
+   - **Successful Response:**
+      - HTTP 200 OK with a message indicating successful registration.
+   - **Error Response:**
+      - HTTP 400 Bad Request with a message indicating the username already exists.
 
-2. <span style="color:green">Authenticate a User and Return a JWT Token</span>
-    - *POST /users/login*
-    - **Request Body:**
-      ```json
-      { "username": "", "password": "" }
-      ```
-    - **Successful Response:**
-        - HTTP 200 OK with the JWT token in the response body.
-    - **Error Response:**
-        - HTTP 401 Unauthorized with a message indicating incorrect username or password.
+2. **Authenticate a User and Return a JWT Token**
+   - *POST /users/login*
+   - **Request Body:**
+     ```json
+     { "username": "", "password": "" }
+     ```
+   - **Successful Response:**
+      - HTTP 200 OK with the JWT token in the response body.
+   - **Error Response:**
+      - HTTP 401 Unauthorized with a message indicating incorrect username or password.
 
-3. <span style="color:green">Retrieve a User by Username</span>
-    - *GET /users/{name}*
-    - **Path Variable:**
-        - name - The username of the user.
-    - **Successful Response:**
-        - HTTP 200 OK with the user details in the response body.
-    - **Error Response:**
-        - HTTP 404 Not Found if the user is not found.
+3. **Retrieve a User by Username**
+   - *GET /users/{name}*
+   - **Path Variable:**
+      - name - The username of the user.
+   - **Successful Response:**
+      - HTTP 200 OK with the user details in the response body.
+   - **Error Response:**
+      - HTTP 404 Not Found if the user is not found.
 
-4. <span style="color:green">Retrieve All Users</span>
-    - *GET /users/all*
-    - **Successful Response:**
-        - HTTP 200 OK with a list of all users in the response body.
-    - **Error Response:**
-        - HTTP 404 Not Found if no users are found.
+4. **Retrieve All Users**
+   - *GET /users/all*
+   - **Successful Response:**
+      - HTTP 200 OK with a list of all users in the response body.
+   - **Error Response:**
+      - HTTP 404 Not Found if no users are found.
 
-5. <span style="color:green">Delete a User by ID</span>
-    - *DELETE /users/{id}*
-    - **Path Variable:**
-        - id - The ID of the user.
-    - **Successful Response:**
-        - HTTP 200 OK if the user is successfully deleted.
-    - **Error Response:**
-        - HTTP 404 Not Found if the user is not found.
+5. **Delete a User by ID**
+   - *DELETE /users/{id}*
+   - **Path Variable:**
+      - id - The ID of the user.
+   - **Successful Response:**
+      - HTTP 200 OK if the user is successfully deleted.
+   - **Error Response:**
+      - HTTP 404 Not Found if the user is not found.
 
-6. <span style="color:green">Update a User by ID</span>
-    - *PUT /users/{id}*
-    - **Request Body:**
-      ```json
-      { "username": "<new_username>", "password": "<new_password>" }
-      ```
-    - **Path Variable:**
-        - id - The ID of the user.
-    - **Successful Response:**
-        - HTTP 200 OK with a message indicating successful update.
-    - **Error Response:**
-        - HTTP 404 Not Found if the user is not found.
+6. **Update a User by ID**
+   - *PUT /users/{id}*
+   - **Request Body:**
+     ```json
+     { "username": "<new_username>", "password": "<new_password>" }
+     ```
+   - **Path Variable:**
+      - id - The ID of the user.
+   - **Successful Response:**
+      - HTTP 200 OK with a message indicating successful update.
+   - **Error Response:**
+      - HTTP 404 Not Found if the user is not found.
 
-7. <span style="color:green">Change the Password of the Currently Logged-in User</span>
-    - *PUT /users/changePass*
-    - **Request Body:**
-      ```json
-      { "oldPassword": "<old_password>", "newPassword": "<new_password>", "confirmPassword": "<confirm_password>" }
-      ```
-    - **Successful Response:**
-        - HTTP 200 OK with a message indicating successful password change.
-    - **Error Response:**
-        - HTTP 400 Bad Request with an error message if the password change fails.
+7. **Change the Password of the Currently Logged-in User**
+   - *PUT /users/changePass*
+   - **Request Body:**
+     ```json
+     { "oldPassword": "<old_password>", "newPassword": "<new_password>", "confirmPassword": "<confirm_password>" }
+     ```
+   - **Successful Response:**
+      - HTTP 200 OK with a message indicating successful password change.
+   - **Error Response:**
+      - HTTP 400 Bad Request with an error message if the password change fails.
 
-8. <span style="color:green">Renew the JWT Token of the Currently Logged-in User</span>
-    - *POST /users/renewToken*
-    - **Successful Response:**
-        - HTTP 200 OK with the new JWT token in the response body.
-    - **Error Response:**
-        - HTTP 401 Unauthorized with a message indicating token renewal failure.
+8. **Renew the JWT Token of the Currently Logged-in User**
+   - *POST /users/renewToken*
+   - **Successful Response:**
+      - HTTP 200 OK with the new JWT token in the response body.
+   - **Error Response:**
+      - HTTP 401 Unauthorized with a message indicating token renewal failure.
 
 
 
