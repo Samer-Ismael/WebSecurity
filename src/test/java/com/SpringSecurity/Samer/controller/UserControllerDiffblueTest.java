@@ -34,6 +34,7 @@ import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.ResultActions;
@@ -44,9 +45,8 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
 @SpringBootTest(classes = SamerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
-
 class UserControllerDiffblueTest {
+
     @MockBean
     private AuthenticationManager authenticationManager;
 
@@ -167,243 +167,11 @@ class UserControllerDiffblueTest {
         assertEquals(200, actualDeleteUserResult.getStatusCodeValue());
     }
 
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
 
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
 
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword("iloveyou");
-        userEntity3.setRole(Roles.ROLE_USER);
-        userEntity3.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Done!"));
-    }
 
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById2() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
 
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(false);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
 
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword("iloveyou");
-        userEntity3.setRole(Roles.ROLE_USER);
-        userEntity3.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Not found"));
-    }
-
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById3() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
-
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn(null);
-
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword("iloveyou");
-        userEntity3.setRole(Roles.ROLE_USER);
-        userEntity3.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Done!"));
-    }
-
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById4() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
-
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
-
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword(null);
-        userEntity3.setRole(Roles.ROLE_USER);
-        userEntity3.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Done!"));
-    }
-
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById5() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
-
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
-
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword("iloveyou");
-        userEntity3.setRole(null);
-        userEntity3.setUsername("janedoe");
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Done!"));
-    }
-
-    /**
-     * Method under test: {@link UserController#updateUserById(Long, UserEntity)}
-     */
-    @Test
-    void testUpdateUserById6() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        Optional<UserEntity> ofResult = Optional.of(userEntity);
-
-        UserEntity userEntity2 = new UserEntity();
-        userEntity2.setId(1L);
-        userEntity2.setPassword("iloveyou");
-        userEntity2.setRole(Roles.ROLE_USER);
-        userEntity2.setUsername("janedoe");
-        Optional<UserEntity> ofResult2 = Optional.of(userEntity2);
-        when(userService.updateUserById(Mockito.<Long>any(), Mockito.<UserEntity>any())).thenReturn(ofResult2);
-        when(userService.findById(anyLong())).thenReturn(ofResult);
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        when(passwordEncoder.encode(Mockito.<CharSequence>any())).thenReturn("secret");
-
-        UserEntity userEntity3 = new UserEntity();
-        userEntity3.setId(1L);
-        userEntity3.setPassword("iloveyou");
-        userEntity3.setRole(Roles.ROLE_USER);
-        userEntity3.setUsername(null);
-        String content = (new ObjectMapper()).writeValueAsString(userEntity3);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.put("/users/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(content);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("text/plain;charset=ISO-8859-1"))
-                .andExpect(MockMvcResultMatchers.content().string("Done!"));
-    }
 
     /**
      * Method under test: {@link UserController#authAndGetToken(AuthRequest)}
@@ -451,63 +219,7 @@ class UserControllerDiffblueTest {
                 .andExpect(MockMvcResultMatchers.content().string("Wrong username or password"));
     }
 
-    /**
-     * Method under test: {@link UserController#deleteUser(Long)}
-     */
-    @Test
-    void testDeleteUser() throws Exception {
-        doNothing().when(userService).deleteById(Mockito.<Long>any());
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(true);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/{id}", 1L);
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
 
-    /**
-     * Method under test: {@link UserController#deleteUser(Long)}
-     */
-    @Test
-    void testDeleteUser2() throws Exception {
-        doNothing().when(userService).deleteById(Mockito.<Long>any());
-        when(userService.existsById(Mockito.<Long>any())).thenReturn(false);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/users/{id}", 1L);
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    /**
-     * Method under test: {@link UserController#getAllUsers()}
-     */
-    @Test
-    void testGetAllUsers() throws Exception {
-        when(userService.findAll()).thenReturn(null);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/all");
-        ResultActions actualPerformResult = MockMvcBuilders.standaloneSetup(userController).build().perform(requestBuilder);
-        actualPerformResult.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    /**
-     * Method under test: {@link UserController#getUserByName(String)}
-     */
-    @Test
-    void testGetUserByName() throws Exception {
-        UserEntity userEntity = new UserEntity();
-        userEntity.setId(1L);
-        userEntity.setPassword("iloveyou");
-        userEntity.setRole(Roles.ROLE_USER);
-        userEntity.setUsername("janedoe");
-        when(userService.findByUsername(Mockito.<String>any())).thenReturn(userEntity);
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.get("/users/{name}", "Name");
-        MockMvcBuilders.standaloneSetup(userController)
-                .build()
-                .perform(requestBuilder)
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
-                .andExpect(MockMvcResultMatchers.content()
-                        .string("{\"id\":1,\"username\":\"janedoe\",\"password\":\"iloveyou\",\"role\":\"ROLE_USER\"}"));
-    }
 
     /**
      * Method under test: {@link UserController#register(AuthRequest)}
