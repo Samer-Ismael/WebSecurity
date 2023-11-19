@@ -25,6 +25,11 @@ This is a RESTful API built with Spring Boot and Spring Security. It provides us
 
 To run this project, you need to have Java and Maven installed on your machine. You can then clone the repository and run the application with the following commands:
 
+## Diagram
+
+![Diagram](Diagram%2FSamer.png)
+
+
 ```bash
 git clone https://github.com/Samer-Ismael/WebSecurity.git
 cd yourrepository
