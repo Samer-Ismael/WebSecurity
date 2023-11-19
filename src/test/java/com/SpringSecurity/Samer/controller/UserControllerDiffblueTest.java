@@ -7,6 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.SpringSecurity.Samer.SamerApplication;
 import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
@@ -42,7 +43,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 
-@SpringBootTest
+@SpringBootTest(classes = SamerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+
 
 class UserControllerDiffblueTest {
     @MockBean

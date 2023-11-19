@@ -9,7 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringBootTest(classes = SamerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SamerApplicationTests {
 
 	@Autowired

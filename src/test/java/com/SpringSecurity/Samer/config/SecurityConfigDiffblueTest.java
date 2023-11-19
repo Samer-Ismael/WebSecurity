@@ -3,6 +3,7 @@ package com.SpringSecurity.Samer.config;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
+import com.SpringSecurity.Samer.SamerApplication;
 import com.SpringSecurity.Samer.filter.JWTAuthFilter;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 
-@SpringBootTest
+@SpringBootTest(classes = SamerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 class SecurityConfigDiffblueTest {
     @MockBean

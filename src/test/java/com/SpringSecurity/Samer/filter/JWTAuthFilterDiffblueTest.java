@@ -4,6 +4,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
+import com.SpringSecurity.Samer.SamerApplication;
 import com.SpringSecurity.Samer.service.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -27,8 +28,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-@WebAppConfiguration
-@SpringBootTest
+@SpringBootTest(classes = SamerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 class JWTAuthFilterDiffblueTest {
     @Autowired
