@@ -164,6 +164,9 @@ public class UserController {
         }
     }
 
+    // The updateUser method updates the currently logged-in user.
+    // It returns a ResponseEntity with an OK status and a message if the user was successfully updated,
+    // or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Delete user", notes = "Change the pass for the user that is logged in, not other users ")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/changePass")
@@ -194,6 +197,8 @@ public class UserController {
 
     }
 
+    // The renewToken method renews the JWT token for the logged-in user.
+    // Here we can ask for other things like payment or something else to renew the token.
     @ApiOperation(value = "Renew token", notes = "Renews the JWT token for the logged in user")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PostMapping("/renewToken")
