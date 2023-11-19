@@ -1,5 +1,6 @@
 package com.SpringSecurity.Samer.service;
 
+import ch.qos.logback.core.subst.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -92,10 +93,5 @@ public class JWTService {
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username = getUserNameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
-
-    public String renewToken(String oldToken) {
-        String username = getUserNameFromToken(oldToken);
-        return generateToken(username);
     }
 }
