@@ -19,8 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ContextConfiguration(classes = {SecurityConfig.class})
-@ExtendWith(SpringExtension.class)
+
 @SpringBootTest
 
 class SecurityConfigDiffblueTest {

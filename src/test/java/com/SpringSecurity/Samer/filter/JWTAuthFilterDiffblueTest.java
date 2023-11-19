@@ -27,9 +27,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-@ContextConfiguration(classes = {JWTAuthFilter.class})
 @WebAppConfiguration
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 
 class JWTAuthFilterDiffblueTest {
