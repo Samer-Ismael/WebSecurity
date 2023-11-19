@@ -59,7 +59,7 @@ Sure, here's a more detailed description of the endpoints:
    - **Error Response:**
       - HTTP 404 Not Found if no users are found.
 
-5. **Delete a User by ID**
+5. **Delete a User by ID (for admin)**
    - *DELETE /users/{id}*
    - **Path Variable:**
       - id - The ID of the user.
@@ -68,13 +68,14 @@ Sure, here's a more detailed description of the endpoints:
    - **Error Response:**
       - HTTP 404 Not Found if the user is not found.
 
-6. **Update a User by ID**
+6. **Update a User by ID (for admin)**
    - *PUT /users/{id}*
    - **Request Body:**
      ```json
      { 
      "username": "<new_username>", 
-     "password": "<new_password>" 
+     "password": "<new_password>",
+     "role": "<new_role>" 
      }
      ```
    - **Path Variable:**
