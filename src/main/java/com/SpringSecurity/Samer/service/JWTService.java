@@ -23,20 +23,22 @@ import java.util.function.Function;
 @Component
 public class JWTService {
 
+    private long oneDay = 24 * 60 * 60 * 1000;
+
     // generateToken method generates a JWT token for a given username.
-    public String generateToken(String username) {
+    public String generateToken(String username, long days) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username);
+        return createToken(claims, username, days);
     }
 
     // createToken method creates a JWT token with the given claims and username.
-    private String createToken(Map<String, Object> claims, String username) {
+    private String createToken(Map<String, Object> claims, String username, long days ) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // The token expiration time is set to 24 hours from the current time.
-                .setExpiration(new Date(System.currentTimeMillis() +  24 * 60 * 60 * 1000)) // 24 hours
+                .setExpiration(new Date(System.currentTimeMillis() + days * oneDay )) // 24 hours
                 .signWith(getSecritkey(), SignatureAlgorithm.HS256).compact();
     }
 

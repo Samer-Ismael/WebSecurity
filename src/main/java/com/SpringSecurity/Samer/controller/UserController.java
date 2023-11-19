@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
@@ -70,14 +72,19 @@ public class UserController {
     // It authenticates the user and if successful, generates a JWT token for the user.
     // Here you can ask for payment or something else before generating the token.
     @ApiOperation(value = "getToken", notes = "Returns a token if the user is authenticated")
-    @PostMapping("/GetToken")
-    public ResponseEntity<String> authAndGetToken(@RequestBody AuthRequest authRequest) {
+    @PostMapping("/getToken/{days}")
+    public ResponseEntity<String> authAndGetToken(@PathVariable long days, @RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            LocalDateTime futureDateTime = currentDateTime.plus(days, ChronoUnit.DAYS);
+
             if (authentication.isAuthenticated()) {
-                return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername()));
+                return new ResponseEntity<>(jwtService.generateToken(authRequest.getUsername(), days) + "\nValid until " + futureDateTime, HttpStatus.OK);
+
+                //return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername(), days));
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");

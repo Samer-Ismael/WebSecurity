@@ -29,8 +29,8 @@ Sure, here's a more detailed description of the endpoints:
    - **Error Response:**
       - HTTP 400 Bad Request with a message indicating the username already exists.
 
-2. **Authenticate a User and Return a JWT Token (Payment can be set here)**
-   - *POST /users/getToken*
+2. **Authenticate a User and Return a JWT Token for the amount of days the user want (Payment can be set here)**
+   - *POST /users/getToken/{days}*
    - **Request Body:**
      ```json
      { 
