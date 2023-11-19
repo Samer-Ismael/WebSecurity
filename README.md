@@ -30,6 +30,7 @@ To run this project, you need to have Java and Maven installed on your machine. 
 ![Diagram](Diagram%2FSamer.png)
 
 
+
 ```bash
 git clone https://github.com/Samer-Ismael/WebSecurity.git
 cd yourrepository
