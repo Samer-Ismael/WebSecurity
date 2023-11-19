@@ -68,8 +68,9 @@ public class UserController {
 
     // The authAndGetToken method handles the authentication of users.
     // It authenticates the user and if successful, generates a JWT token for the user.
-    @ApiOperation(value = "Login", notes = "Returns a token if the user is authenticated")
-    @PostMapping("/login")
+    // Here you can ask for payment or something else before generating the token.
+    @ApiOperation(value = "getToken", notes = "Returns a token if the user is authenticated")
+    @PostMapping("/GetToken")
     public ResponseEntity<String> authAndGetToken(@RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager
@@ -195,22 +196,6 @@ public class UserController {
 
 
 
-    }
-
-    // The renewToken method renews the JWT token for the logged-in user.
-    // Here we can ask for other things like payment or something else to renew the token.
-    @ApiOperation(value = "Renew token", notes = "Renews the JWT token for the logged in user")
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-    @PostMapping("/renewToken")
-    public ResponseEntity<String> renewToken(Principal principal) {
-        String date = Date.from(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10).toInstant()).toString();
-        try {
-            String username = principal.getName();
-            String newToken = jwtService.generateToken(username);
-            return new ResponseEntity<>(newToken + "\nValid until: " + date, HttpStatus.OK);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unable to renew token");
-        }
     }
 
 }

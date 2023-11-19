@@ -29,8 +29,8 @@ Sure, here's a more detailed description of the endpoints:
    - **Error Response:**
       - HTTP 400 Bad Request with a message indicating the username already exists.
 
-2. **Authenticate a User and Return a JWT Token**
-   - *POST /users/login*
+2. **Authenticate a User and Return a JWT Token (Payment can be set here)**
+   - *POST /users/getToken*
    - **Request Body:**
      ```json
      { 
@@ -100,12 +100,6 @@ Sure, here's a more detailed description of the endpoints:
    - **Error Response:**
       - HTTP 400 Bad Request with an error message if the password change fails.
 
-8. **Renew the JWT Token of the Currently Logged-in User**
-   - *POST /users/renewToken*
-   - **Successful Response:**
-      - HTTP 200 OK with the new JWT token in the response body.
-   - **Error Response:**
-      - HTTP 401 Unauthorized with a message indicating token renewal failure.
 
 
 
