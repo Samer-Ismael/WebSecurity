@@ -21,13 +21,15 @@ This is a RESTful API built with Spring Boot and Spring Security. It provides us
 - `PUT /users/changePass`: Change the password of the logged in user.
 - `POST /users/renewToken`: Renew the JWT token of the logged in user.
 
-## Setup
-
-To run this project, you need to have Java and Maven installed on your machine. You can then clone the repository and run the application with the following commands:
 
 ## Diagram
 
 ![Diagram](Diagram%2FSamer.png)
+
+
+## Setup
+
+To run this project, you need to have Java and Maven installed on your machine. You can then clone the repository and run the application with the following commands:
 
 
 
