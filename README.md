@@ -19,7 +19,10 @@ Sure, here's a more detailed description of the endpoints:
    - *POST /users/register*
    - **Request Body:**
      ```json
-     { "username": "", "password": "" }
+     { 
+     "username": "<Your-username>", 
+     "password": "<Your-password>" 
+     }
      ```
    - **Successful Response:**
       - HTTP 200 OK with a message indicating successful registration.
@@ -30,7 +33,10 @@ Sure, here's a more detailed description of the endpoints:
    - *POST /users/login*
    - **Request Body:**
      ```json
-     { "username": "", "password": "" }
+     { 
+     "username": "<Your-username>", 
+     "password": "<Your-password>" 
+     }
      ```
    - **Successful Response:**
       - HTTP 200 OK with the JWT token in the response body.
@@ -66,7 +72,10 @@ Sure, here's a more detailed description of the endpoints:
    - *PUT /users/{id}*
    - **Request Body:**
      ```json
-     { "username": "<new_username>", "password": "<new_password>" }
+     { 
+     "username": "<new_username>", 
+     "password": "<new_password>" 
+     }
      ```
    - **Path Variable:**
       - id - The ID of the user.
@@ -79,7 +88,11 @@ Sure, here's a more detailed description of the endpoints:
    - *PUT /users/changePass*
    - **Request Body:**
      ```json
-     { "oldPassword": "<old_password>", "newPassword": "<new_password>", "confirmPassword": "<confirm_password>" }
+     { 
+     "oldPassword": "<old_password>", 
+     "newPassword": "<new_password>", 
+     "confirmPassword": "<confirm_password>" 
+     }
      ```
    - **Successful Response:**
       - HTTP 200 OK with a message indicating successful password change.
