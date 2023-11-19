@@ -1,6 +1,7 @@
 package com.SpringSecurity.Samer.config;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
 
 import com.SpringSecurity.Samer.filter.JWTAuthFilter;
 import org.junit.jupiter.api.Disabled;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -28,21 +30,6 @@ class SecurityConfigDiffblueTest {
     @MockBean
     private UserDetailsService userDetailsService;
 
-    /**
-     * Method under test: {@link SecurityConfig#filterChain(HttpSecurity)}
-     */
-    @Test
-    @Disabled("TODO: Complete this test")
-    void testFilterChain() throws Exception {
-        // TODO: Complete this test.
-        //   Reason: R013 No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   java.lang.IllegalArgumentException: objectPostProcessor cannot be null
-        //   See https://diff.blue/R013 to resolve this issue.
-
-        securityConfig.filterChain(new HttpSecurity(null, new AuthenticationManagerBuilder(null), null));
-    }
 
     /**
      * Method under test: {@link SecurityConfig#passwordEncoder()}
