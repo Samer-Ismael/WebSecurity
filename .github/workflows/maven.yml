@@ -1,4 +1,4 @@
-name: Java CI with Maven
+name: Java CI with Maven and Diffblue Cover
 
 on:
   push:
@@ -13,14 +13,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: '17'
           distribution: 'adopt'
           cache: maven
-      - name: Build with Maven
-        run: mvn -B test --file pom.xml
+
+      - name: Install Diffblue Cover
+        run: |
+          curl -sSL https://downloads.diffblue.com/latest/cover-install.sh | bash
+          export PATH=$HOME/.diffblue/bin:$PATH
+
+      - name: Build with Maven and Diffblue Cover
+        run: |
+          mvn -B test --file pom.xml
+          # Run Diffblue Cover
+          cover analyze --fail-on-cov
 
       # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
       - name: Update dependency graph
