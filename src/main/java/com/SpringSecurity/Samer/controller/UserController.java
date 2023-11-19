@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 // UserController is a REST controller that handles user-related requests.
@@ -192,4 +193,19 @@ public class UserController {
 
 
     }
+
+    @ApiOperation(value = "Renew token", notes = "Renews the JWT token for the logged in user")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @PostMapping("/renewToken")
+    public ResponseEntity<String> renewToken(Principal principal) {
+        String date = Date.from(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10).toInstant()).toString();
+        try {
+            String username = principal.getName();
+            String newToken = jwtService.generateToken(username);
+            return new ResponseEntity<>(newToken + "\nValid until: " + date, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unable to renew token");
+        }
+    }
+
 }

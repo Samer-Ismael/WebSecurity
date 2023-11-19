@@ -93,4 +93,9 @@ public class JWTService {
         final String username = getUserNameFromToken(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
+
+    public String renewToken(String oldToken) {
+        String username = getUserNameFromToken(oldToken);
+        return generateToken(username);
+    }
 }
