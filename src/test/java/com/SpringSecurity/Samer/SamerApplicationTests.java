@@ -27,5 +27,4 @@ class SamerApplicationTests {
 		assertNotNull(userController);
 	}
 
-	// Add more tests here...
 }
