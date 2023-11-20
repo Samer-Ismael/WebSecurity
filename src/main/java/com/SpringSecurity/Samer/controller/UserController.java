@@ -44,7 +44,7 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
-    @RequestMapping("/")
+    @RequestMapping("/Welcome")
     public String redirectToIndex() {
         return "redirect:/index.html";
     }
