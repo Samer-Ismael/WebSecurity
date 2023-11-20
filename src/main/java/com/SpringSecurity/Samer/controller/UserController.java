@@ -44,6 +44,11 @@ public class UserController {
         this.jwtService = jwtService;
     }
 
+    @RequestMapping("/")
+    public String redirectToIndex() {
+        return "redirect:/index.html";
+    }
+
     // The register method handles the registration of new users.
     // It checks if the username already exists, if not, it creates a new user with the provided details.
     @ApiOperation(value = "Register", notes = "Everybody is welcome to register")

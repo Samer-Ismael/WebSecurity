@@ -28,6 +28,7 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private JWTAuthFilter jwtAuthFilter;
     private static final String[] AUTH_WHITELIST = {
+            "/", // <-- this is the home page
             "index.html",
             "style.css",
             "/users/register",
