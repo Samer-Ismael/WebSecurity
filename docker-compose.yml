@@ -12,7 +12,7 @@ services:
       - 3307:3306
 
   spring-app:
-    image: samer512/api2:1.1
+    image: samer512/api2:1.2
     restart: always
     container_name: spring-app
     depends_on:
