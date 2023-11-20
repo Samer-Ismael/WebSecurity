@@ -3,6 +3,7 @@ package com.SpringSecurity.Samer.config;
 import com.SpringSecurity.Samer.filter.JWTAuthFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -28,7 +29,6 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private JWTAuthFilter jwtAuthFilter;
     private static final String[] AUTH_WHITELIST = {
-            "/Welcome", // <-- this is the home page
             "index.html",
             "style.css",
             "/users/register",
