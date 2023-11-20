@@ -1,0 +1,26 @@
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dockerdatabase
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=root
+    ports:
+      - 3307:3306
+
+  spring-app:
+    image: samer512/api
+    restart: always
+    container_name: spring-app
+    depends_on:
+      - mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dockerdatabase
+      - SPRING_DATASOURCE_USERNAME=admin
+      - SPRING_DATASOURCE_PASSWORD=root
+    ports:
+      - 8080:8080
+

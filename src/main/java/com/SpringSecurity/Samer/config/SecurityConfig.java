@@ -31,7 +31,7 @@ public class SecurityConfig {
             "index.html",
             "style.css",
             "/users/register",
-            "/users/getToken/**",
+            "/users/login",
             "/swagger-resources",
             "/swagger-resources/**",
             "/configuration/ui",
