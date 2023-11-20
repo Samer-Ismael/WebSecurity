@@ -170,7 +170,7 @@ public class UserController {
     // The updateUser method updates the currently logged-in user.
     // It returns a ResponseEntity with an OK status and a message if the user was successfully updated,
     // or a NOT_FOUND status otherwise.
-    @ApiOperation(value = "Delete user", notes = "Change the pass for the user that is logged in, not other users ")
+    @ApiOperation(value = "Change pass", notes = "Change the pass for the user that is logged in, not other users ")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/changePass")
     public ResponseEntity<String> changeUserPass (Principal principal, @RequestBody ChangingPassword changingPassword) {
