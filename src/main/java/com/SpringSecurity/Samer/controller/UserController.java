@@ -71,8 +71,8 @@ public class UserController {
     // The authAndGetToken method handles the authentication of users.
     // It authenticates the user and if successful, generates a JWT token for the user.
     // Here you can ask for payment or something else before generating the token.
-    @ApiOperation(value = "getToken", notes = "Returns a token if the user is authenticated")
-    @PostMapping("/getToken")
+    @ApiOperation(value = "login", notes = "Returns a token if the user is authenticated")
+    @PostMapping("/login")
     public ResponseEntity<String> authAndGetToken(@RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager

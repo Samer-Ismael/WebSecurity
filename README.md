@@ -5,7 +5,7 @@ This is a RESTful API built with Spring Boot and Spring Security. It provides us
 ## Features
 
 - User registration: New users can register by providing a username and password.
-- User getToken: Registered users can login by providing their username and password. Upon successful login, a JWT token is returned.
+- User login: Registered users can login by providing their username and password. Upon successful login, a JWT token is returned.
 - User management: The API provides endpoints for retrieving a user by username, retrieving all users, deleting a user by ID, and updating a user by ID. These endpoints are only accessible to users with the `ROLE_ADMIN` role.
 - Password change: Logged in users can change their password by providing their old password and the new password.
 - Token renewal: Logged in users can renew their JWT token.
@@ -30,7 +30,7 @@ Sure, here's a more detailed description of the endpoints:
       - HTTP 400 Bad Request with a message indicating the username already exists.
 
 2. **Authenticate a User and Return a JWT Token for the amount of days the user want (Payment can be set here)**
-   - *POST /users/getToken*
+   - *POST /users/login*
    - **Request Body:**
      ```json
      { 
