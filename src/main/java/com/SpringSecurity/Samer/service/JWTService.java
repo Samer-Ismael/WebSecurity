@@ -1,6 +1,5 @@
 package com.SpringSecurity.Samer.service;
 
-import ch.qos.logback.core.subst.Token;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,19 +25,19 @@ public class JWTService {
     private long oneDay = 24 * 60 * 60 * 1000;
 
     // generateToken method generates a JWT token for a given username.
-    public String generateToken(String username, long days) {
+    public String generateToken(String username) {
         Map<String, Object> claims = new HashMap<>();
-        return createToken(claims, username, days);
+        return createToken(claims, username);
     }
 
     // createToken method creates a JWT token with the given claims and username.
-    private String createToken(Map<String, Object> claims, String username, long days ) {
+    private String createToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 // The token expiration time is set to 24 hours from the current time.
-                .setExpiration(new Date(System.currentTimeMillis() + days * oneDay )) // 24 hours
+                .setExpiration(new Date(System.currentTimeMillis() + oneDay )) // 24 hours
                 .signWith(getSecritkey(), SignatureAlgorithm.HS256).compact();
     }
 

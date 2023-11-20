@@ -72,19 +72,14 @@ public class UserController {
     // It authenticates the user and if successful, generates a JWT token for the user.
     // Here you can ask for payment or something else before generating the token.
     @ApiOperation(value = "getToken", notes = "Returns a token if the user is authenticated")
-    @PostMapping("/getToken/{days}")
-    public ResponseEntity<String> authAndGetToken(@PathVariable long days, @RequestBody AuthRequest authRequest) {
+    @PostMapping("/getToken")
+    public ResponseEntity<String> authAndGetToken(@RequestBody AuthRequest authRequest) {
         try {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
 
-            LocalDateTime currentDateTime = LocalDateTime.now();
-            LocalDateTime futureDateTime = currentDateTime.plus(days, ChronoUnit.DAYS);
-
             if (authentication.isAuthenticated()) {
-                return new ResponseEntity<>(jwtService.generateToken(authRequest.getUsername(), days) + "\nValid until " + futureDateTime, HttpStatus.OK);
-
-                //return ResponseEntity.ok(jwtService.generateToken(authRequest.getUsername(), days));
+                return new ResponseEntity<>(jwtService.generateToken(authRequest.getUsername()), HttpStatus.OK);
             }
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
