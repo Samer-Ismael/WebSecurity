@@ -1,11 +1,11 @@
 package com.SpringSecurity.Samer.controller;
 
+import com.SpringSecurity.Samer.filter.PasswordValidator;
 import com.SpringSecurity.Samer.model.AuthRequest;
 import com.SpringSecurity.Samer.model.ChangingPassword;
 import com.SpringSecurity.Samer.model.Roles;
 import com.SpringSecurity.Samer.model.UserEntity;
 import com.SpringSecurity.Samer.service.JWTService;
-import com.SpringSecurity.Samer.filter.PasswordValidator;
 import com.SpringSecurity.Samer.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.HttpStatus;
@@ -14,14 +14,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.List;
 
 // UserController is a REST controller that handles user-related requests.
@@ -43,6 +39,7 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
+
     //----------------------------------------------------------------------
     // Login and register Methods here...
     //----------------------------------------------------------------------
@@ -179,7 +176,7 @@ public class UserController {
     @ApiOperation(value = "Change pass", notes = "Change the pass for the user that is logged in, not other users ")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @PutMapping("/changePass")
-    public ResponseEntity<String> changeUserPass (Principal principal, @RequestBody ChangingPassword changingPassword) {
+    public ResponseEntity<String> changeUserPass(Principal principal, @RequestBody ChangingPassword changingPassword) {
         UserEntity user = userService.findByUsername(principal.getName());
         String oldPass = changingPassword.getOldPassword();
         String newPass = changingPassword.getNewPassword();
@@ -200,8 +197,6 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Old password is incorrect");
         }
-
-
 
 
     }

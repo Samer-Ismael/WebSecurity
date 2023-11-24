@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class UserService {
     // It returns a list of all UserEntity objects, or null if no users are found.
     public List<UserEntity> findAll() {
         if (userRepo.findAll().isEmpty()) {
-            return null;
+            return Collections.emptyList();
         } else {
             userRepo.findAll();
             return new ArrayList<>(userRepo.findAll());
