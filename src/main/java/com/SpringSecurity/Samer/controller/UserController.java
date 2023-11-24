@@ -43,7 +43,9 @@ public class UserController {
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
     }
-
+    //----------------------------------------------------------------------
+    // Login and register Methods here...
+    //----------------------------------------------------------------------
     // The register method handles the registration of new users.
     // It checks if the username already exists, if not, it creates a new user with the provided details.
     @ApiOperation(value = "Register", notes = "Everybody is welcome to register")
@@ -87,6 +89,9 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Wrong username or password");
     }
 
+    //----------------------------------------------------------------------
+    // CRUD Methods start here...
+    //----------------------------------------------------------------------
     // The getUserByName method retrieves a user by their username.
     // It returns a ResponseEntity containing the UserEntity if found, or a NOT_FOUND status otherwise.
     @ApiOperation(value = "Get user by id", notes = "Returns user by id (for admins and users)")
@@ -140,6 +145,7 @@ public class UserController {
 
         if (userService.existsById(id)) {
             UserEntity newUser = userService.findById(id).get();
+            // that will make it easier to update the user, if the field is null, it will not be updated
             if (updatedUser.getPassword() == null) updatedUser.setPassword(newUser.getPassword());
             if (updatedUser.getRole() == null) updatedUser.setRole(newUser.getRole());
             if (updatedUser.getUsername() == null) updatedUser.setUsername(newUser.getUsername());
